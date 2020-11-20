@@ -3,7 +3,7 @@ import numpy as np
 
 def rastrigin_func(xx, a=10):
     f = a * len(xx) + sum([np.power(x, 2) - a * np.cos(2 * np.pi * x) for x in xx])
-    return f
+    return np.negative(f)
 
 
 def bukin_f6_func(x):

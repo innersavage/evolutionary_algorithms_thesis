@@ -3,6 +3,15 @@ import random
 import math
 
 
+def repair_population(population, evaluation_values):
+    rm = np.array([-np.inf])
+    idx = np.in1d(evaluation_values, rm) + np.array([i if type(i) == np.bool_ else i[0] for i in np.isnan(evaluation_values)])
+    new_population = []
+    for i in population:
+        new_population.append(i[~idx])
+    return new_population, evaluation_values[~idx]
+
+
 def roulette_spin(roulette_wheel):
     spin = random.SystemRandom().uniform(0, 100)
     for i, j in enumerate(roulette_wheel):
@@ -30,14 +39,20 @@ def ranking_selection(population, evaluation_values, amount=10, function=None, *
     ranking = evaluation_values.tolist()
     ranking.sort()
     parent_population = [[] for i in range(len(population))]
-    i = len(ranking)
+    i, j = len(ranking), 0
+    last_index = (np.array(-1),)
     while len(parent_population[0]) < amount:
         f = function(i, len(ranking), **kwargs)
         i -= 1
-        index = np.where(evaluation_values == ranking[i])
-        for j in range(math.ceil(f)):
-            for k, chromosomes in enumerate(parent_population):
-                chromosomes.append(population[k][index])
+        next_index = np.where(evaluation_values == ranking[i])
+        j = j + 1 if (last_index[0].tolist() == next_index[0].tolist()) else 0
+        last_index = next_index
+        index = next_index[0][j]
+        for k in range(math.ceil(f)):
+            for l, chromosomes in enumerate(parent_population):
+                chromosomes.append(population[l][index])
+        if i == 0:
+            i, j = len(ranking), 0
     return parent_population
 
 
@@ -50,7 +65,7 @@ def ranking_selection_linear(population, evaluation_values, amount=10, **kwargs)
     return ranking_selection(population, evaluation_values, amount, function=linear_function, SP=2, **kwargs)
 
 
-def nonlinear_function_X(i, K, SP=2):
+def nonlinear_function_X(K, SP=2):
     poly = [SP - K]
     for i in range(K-1):
         poly.append(SP)
@@ -59,7 +74,7 @@ def nonlinear_function_X(i, K, SP=2):
 
 
 def nonlinear_function(i, K, SP=2):
-    X = nonlinear_function_X(i, K, SP)
+    X = nonlinear_function_X(K, SP)
     f = (K * pow(X, i - 1)) / sum([pow(X, j) for j in range(K)])
     return f
 
