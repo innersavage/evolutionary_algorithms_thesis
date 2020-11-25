@@ -23,6 +23,8 @@ def roulette_selection(population, evaluation_values, amount=10):
     if not all([True if len(evaluation_values) == len(chromosomes) else False for chromosomes in population]):
         raise Exception
     sum_of_all = np.sum(evaluation_values)
+    if sum_of_all in [np.float64('inf'), np.float64('-inf')]:
+        sum_of_all = np.nextafter(sum_of_all, 0)
     probability = [i / sum_of_all for i in evaluation_values]
     roulette_wheel = [sum(probability[0:i]) * 100 for i in range(1, len(probability) + 1)]
     parent_population = [[] for i in range(len(population))]

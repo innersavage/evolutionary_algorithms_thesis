@@ -12,4 +12,7 @@ from .pointcrossover import PointCrossover
 from .reducedsurrogatecrossover import ReducedSurrogateCrossover
 from .shufflecrossover import ShuffleCrossover
 from .uniformcrossover import UniformCrossover
-
+from .gaussianuniformcrossover import GaussianUniformCrossover
+from .microbialcrossover import MicrobialCrossover, MicrobialCrossoverWithRand
+from .spherecrossover import SphereCrossover1
+from .spherecrossover import SphereCrossover2
