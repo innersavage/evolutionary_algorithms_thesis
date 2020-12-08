@@ -76,7 +76,7 @@ def create_gaindex():
     f.close()
 
 
-def run(test_functions, population):
+def run(test_functions, population, offset_from=0, offset_to=200):
     header = 'Algo;Best afer 50 epoch;Best after 100 epoch;Best;Best in epoch;GA Combination'
     for testfunction in test_functions:
         test_function = testfunction['class'](**testfunction['params'])
@@ -87,6 +87,9 @@ def run(test_functions, population):
                 crossover = crossover_method['class']()
                 for mutation_method in mutation_methods:
                     algo += 1
+                    # Offset if chunk set (idea to run calculation on multiple hosts)
+                    if algo < offset_from or algo > offset_to:
+                        continue
                     # Create directory and result file and save calculation output
                     os.makedirs('{}/results/{}'.format(path, testfunction['class'].__name__),
                                 exist_ok=True)
@@ -102,7 +105,7 @@ def run(test_functions, population):
                                                                       testfunction['class'].__name__,
                                                                       algo), 'r') as f:
                             if len(f.readlines()) > 100:
-                                break
+                                continue
                         f = open('{}/results/{}/result_{}.csv'.format(path,
                                                                       testfunction['class'].__name__,
                                                                       algo), 'a')
@@ -141,19 +144,23 @@ def run(test_functions, population):
 
 
 if len(sys.argv) > 1:
+    offset_from = 0
+    offset_to = 200
     if sys.argv[1] == '1':
         func = [{'class': Rastrigin, 'params': {'negative': True}}]
-        run(func, population)
     elif sys.argv[1] == '2':
         func = [{'class': Michalewicz, 'params': {'negative': True}}]
-        run(func, population)
     elif sys.argv[1] == '3':
         func = [{'class': BukinF6, 'params': {'negative': True}}]
-        run(func, population)
     elif sys.argv[1] == '4':
         func = [{'class': Easom, 'params': {'negative': True}}]
-        run(func, population)
     elif sys.argv[1] == '5':
-        run(test_functions_3d, population_3d)
+        func = test_functions_3d
+        population = population_3d
+    if len(sys.argv) > 2:
+        offset_from = int(sys.argv[2])
+    if len(sys.argv) > 3:
+        offset_to = int(sys.argv[3])
+    run(func, population, offset_from, offset_to)
 else:
     run(test_functions, population)
