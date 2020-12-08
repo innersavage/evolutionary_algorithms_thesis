@@ -2,7 +2,7 @@ from .mutationbase import MutationBase
 import random
 
 
-class CountPreservingMutation1(MutationBase):
+class CountPreservingMutation(MutationBase):
     datatype = 'bin'
 
     def mutation_function(self, ind, p, **kwargs):

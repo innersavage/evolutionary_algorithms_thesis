@@ -11,10 +11,11 @@ np.errstate(all='raise')
 
 
 class TestAll(unittest.TestCase):
-    test_functions = [{'class': Rastrigin, 'params': {}},
-                      {'class': Michalewicz, 'params': {}},
-                      {'class': BukinF6, 'params': {}},
-                      {'class': Easom, 'params': {}}]
+    test_functions = [{'class': Rastrigin, 'params': {'negative': True}},
+                      {'class': Michalewicz, 'params': {'negative': True}},
+                      {'class': BukinF6, 'params': {'negative': True}},
+                      {'class': Easom, 'params': {'negative': True}}]
+    test_functions_3d = [{'class': Wolfe, 'params': {'negative': True}}]
     selection_methods = [roulette_selection,
                          ranking_selection_linear,
                          ranking_selection_nonlinear,
@@ -47,17 +48,19 @@ class TestAll(unittest.TestCase):
                         {'class': BitFlipMutation, 'params': {'p': 0.2}},
                         {'class': BitFlipMutation, 'params': {'p': 0.5}},
                         {'class': BitInsertionMutation, 'params': {}},
-                        {'class': CountPreservingMutation1, 'params': {'p': 0.2}},
+                        {'class': CountPreservingMutation, 'params': {'p': 0.2}},
                         {'class': LocalGreedingMutation, 'params': {}},
                         {'class': GradientDescentTechniquesApproxMutation, 'params': {}}]
 
     def setUp(self):
         X1 = np.random.random_sample((100, 1)) * 200 - 100
         X2 = np.random.random_sample((100, 1)) * 200 - 100
+        X3 = np.random.random_sample((100, 1)) * 200 - 100
         self.population = [X1, X2]
+        self.population_3d = [X1, X2, X3]
 
     def test_all_combinations(self):
-        test_func = Rastrigin(negative=True)
+        test_func = Michalewicz(negative=True)
         for func in self.selection_methods:
             print('Testing selection method: {}'.format(func))
             for crossover_method in self.crossover_methods:
