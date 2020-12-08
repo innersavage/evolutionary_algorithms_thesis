@@ -6,8 +6,6 @@ class TestFunction:
         self.negative = negative
 
     def calculate(self, xx, **kwargs):
-        if len(xx) == 0:
-            raise Exception
         xx = [x.astype(np.float128) for x in xx]
         result = self.test_function(xx, **kwargs)
         if self.negative:

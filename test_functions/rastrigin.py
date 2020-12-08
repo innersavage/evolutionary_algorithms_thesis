@@ -4,5 +4,5 @@ from .functionbase import TestFunction
 
 class Rastrigin(TestFunction):
     def test_function(self, xx, a=10):
-        f = a * len(xx) + sum([np.float_power(x, 2) - a * np.cos(2 * np.pi * x) for x in xx])
+        f = sum([a - a * np.cos(2 * np.pi * x) + np.float_power(x, 2) for x in xx])
         return f
