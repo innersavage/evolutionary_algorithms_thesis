@@ -4,8 +4,9 @@ import math
 
 
 def repair_population(population, evaluation_values):
-    rm = np.array([-np.inf])
-    idx = np.in1d(evaluation_values, rm) + np.array([i if type(i) == np.bool_ else i[0] for i in np.isnan(evaluation_values)])
+    inf = np.array([-np.inf])
+    evaluation_values[evaluation_values == inf] = np.nextafter(inf, 0)
+    idx = np.array([i if type(i) == np.bool_ else i[0] for i in np.isnan(evaluation_values)])
     new_population = []
     for i in population:
         new_population.append(i[~idx])
