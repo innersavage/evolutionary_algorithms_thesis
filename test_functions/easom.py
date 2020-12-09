@@ -7,4 +7,6 @@ class Easom(TestFunction):
         if len(xx) != 2:
             raise Exception
         f = - np.cos(xx[0]) * np.cos(xx[1]) * np.exp(- np.float_power(xx[0] - np.pi, 2) + np.float_power(xx[1] - np.pi, 2))
+        # Uncomment below if you want to draw a graph, for some reason with high precision graph cannot be drawn
+        # f = - np.cos(xx[0]) * np.cos(xx[1]) * np.exp(-((xx[0]-np.pi)**2 + (xx[1]-np.pi)**2))
         return f
