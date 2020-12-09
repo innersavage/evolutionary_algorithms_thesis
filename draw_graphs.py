@@ -25,18 +25,18 @@ def draw_graph(func, file=None, zlim=(-2.01, 2.01), rng=(-4.9, 5.10)):
         plt.savefig('graphs/' + file)
 
 
-graphs = [{'func': rastrigin_func,
+graphs = [{'func': Rastrigin().test_function,
            'file': 'rastrigin.png',
            'zlim': (5, 90)},
-          {'func': easom_func,
+          {'func': Easom().test_function,
            'file': 'easom.png',
            'zlim': (-0.8, 0.2),
            'rng': (-2, 8)},
-          {'func': bukin_f6_func,
+          {'func': BukinF6().test_function,
            'file': 'bukin.png',
            'zlim': (-1, 300),
            'rng': (-14, 3)},
-          {'func': michalewicz_func,
+          {'func': Michalewicz().test_function,
            'file': 'michalewicz.png',
            'zlim': (-2, 0.5),
            'rng': (0, 4)}
