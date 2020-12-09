@@ -5,7 +5,7 @@ how_many_results = 100
 combinations = 736
 
 path = os.path.dirname(os.path.abspath(__file__)) + '/results/'
-functions = ['Rastrigin', 'Michalewicz', 'Bukin6', 'Easom', 'Wolfe']
+functions = ['Rastrigin', 'Michalewicz', 'BukinF6', 'Easom', 'Wolfe']
 
 for func in functions:
     completed = 0
