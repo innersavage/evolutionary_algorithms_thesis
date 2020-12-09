@@ -3,7 +3,7 @@ import os
 
 how_many_results = 100
 combinations = 736
-
+completness_all = 0
 path = os.path.dirname(os.path.abspath(__file__)) + '/results/'
 functions = ['Rastrigin', 'Michalewicz', 'BukinF6', 'Easom', 'Wolfe']
 
@@ -23,9 +23,11 @@ for func in functions:
                         in_progress += 1
                         if lines > 0:
                             completness += (lines - 1) / 100
+    completness_all += completness
     print('# {} function progress'.format(func))
     print('## Completed: {} In progress: {} Total: {} Completness: {:02.4f}%'.format(completed,
                                                                                      in_progress,
                                                                                      combinations,
                                                                                      completness/combinations * 100))
-
+print("")
+print("# Summary completness: {:02.4f}%".format(completness_all/len(functions)/combinations * 100))
