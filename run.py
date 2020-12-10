@@ -115,6 +115,7 @@ def run(test_functions, population, offset_from=0, offset_to=200):
                     newpop = population.copy()
                     # Magic loop which runs GA
                     for i in range(1, 101):
+                        newpop = repair_population(newpop)
                         Y = test_function.calculate(newpop)
                         newpop, Y = repair_population(newpop, Y)
                         if best is None or Y.max() > best:

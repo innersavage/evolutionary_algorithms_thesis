@@ -3,17 +3,23 @@ import random
 import math
 
 
-def repair_population(population, evaluation_values):
+def repair_population(population, evaluation_values=None):
     inf = np.array([np.inf])
-    evaluation_values[evaluation_values == inf] = np.nextafter(inf, 0)
     inf_minus = np.array([-np.inf])
-    evaluation_values[evaluation_values == inf_minus] = np.nextafter(inf_minus, 0)
-    idx = np.array([i if type(i) == np.bool_ else i[0] for i in np.isnan(evaluation_values)])
-    new_population = []
-    for i in population:
-        i[i == inf] = np.nextafter(inf, 0)
-        new_population.append(i[~idx])
-    return new_population, evaluation_values[~idx]
+    if evaluation_values is not None:
+        evaluation_values[evaluation_values == inf] = np.nextafter(inf, 0)
+        evaluation_values[evaluation_values == inf_minus] = np.nextafter(inf_minus, 0)
+        idx = np.array([i if type(i) == np.bool_ else i[0] for i in np.isnan(evaluation_values)])
+        new_population = []
+        for i in population:
+            i[i == inf] = np.nextafter(inf, 0)
+            new_population.append(i[~idx])
+        return new_population, evaluation_values[~idx]
+    else:
+        for i in population:
+            i[i == inf] = np.nextafter(inf, 0)
+            i[i == inf_minus] = np.nextafter(inf_minus, 0)
+        return population
 
 
 def roulette_spin(roulette_wheel):
