@@ -24,10 +24,10 @@ for func in functions:
                         if lines > 0:
                             completness += (lines - 1) / 100
     completness_all += completness
-    print('# {} function progress'.format(func))
-    print('## Completed: {} In progress: {} Total: {} Completness: {:02.4f}%'.format(completed,
+    print('##### {} function progress'.format(func))
+    print('###### Completed: {} In progress: {} Total: {} Completness: {:02.4f}%'.format(completed,
                                                                                      in_progress,
                                                                                      combinations,
                                                                                      completness/combinations * 100))
 print("")
-print("# Summary completness: {:02.4f}%".format(completness_all/len(functions)/combinations * 100))
+print("##### Summary completness: {:02.4f}%".format(completness_all/len(functions)/combinations * 100))
