@@ -8,7 +8,8 @@ class MicrobialCrossover(CrossoverBase):
 
     def crossover_function(self, ind, segment_length, evaluation_function, **kwargs):
         crossover_point = random.SystemRandom().randint(0, len(ind[0]) - segment_length)
-        ind_to_eval = [np.float64(np.float64(self.binstring_to_genotype(i))) for i in ind]
+        ind_real = [np.float64(np.float64(self.binstring_to_genotype(i))) for i in ind]
+        ind_to_eval = [np.array([ind_real[0][i], ind_real[1][i]]) for i in range(len(ind_real[0]))]
         evaluation = evaluation_function(ind_to_eval)
         if evaluation[0] >= evaluation[1]:
             new_ind = [ind[0], ind[1][0:crossover_point]
@@ -26,7 +27,8 @@ class MicrobialCrossoverWithRand(CrossoverBase):
 
     def crossover_function(self, ind, segment_length, evaluation_function, p=0.5, **kwargs):
         crossover_point = random.SystemRandom().randint(0, len(ind[0]) - segment_length)
-        ind_to_eval = [np.float64(np.float64(self.binstring_to_genotype(i))) for i in ind]
+        ind_real = [np.float64(np.float64(self.binstring_to_genotype(i))) for i in ind]
+        ind_to_eval = [np.array([ind_real[0][i], ind_real[1][i]]) for i in range(len(ind_real[0]))]
         evaluation = evaluation_function(ind_to_eval)
         if evaluation[0] >= evaluation[1]:
             new_ind = [ind[0], ind[1][0:crossover_point]
