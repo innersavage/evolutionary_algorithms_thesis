@@ -151,6 +151,8 @@ def run(test_functions, population, scope):
                 for mutation_method in mutation_methods:
                     algo += 1
                     # Offset if chunk set (idea to run calculation on multiple hosts)
+                    if algo < offset_from or algo > offset_to:
+                        continue
                     if algo not in scope:
                         continue
                     # Verbose
@@ -215,6 +217,8 @@ def run(test_functions, population, scope):
 
 
 if len(sys.argv) > 1:
+    offset_from = 1
+    offset_to = 736
     if sys.argv[1] == '1':
         scope = Rastrigin_to_re_run
         func = [{'class': Rastrigin, 'params': {'negative': True}}]
@@ -231,6 +235,10 @@ if len(sys.argv) > 1:
         scope = Wolfe_to_re_run
         func = test_functions_3d
         population = population_3d
+    if len(sys.argv) > 2:
+        offset_from = int(sys.argv[2])
+    if len(sys.argv) > 3:
+        offset_to = int(sys.argv[3])
     run(func, population, scope)
 else:
     print('Usage re-run.py [func_no]')
