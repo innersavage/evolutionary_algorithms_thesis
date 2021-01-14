@@ -13,7 +13,8 @@ class ShuffleCrossover(PointCrossover):
         shuffle_pattern = []
         ind = [list(i) for i in ind]
         for i in range(len(ind[0])):
-            pattern = [random.SystemRandom().randint(0, len(ind[0]) - 1), random.SystemRandom().randint(0, len(ind[0]) - 1)]
+            pattern = [random.SystemRandom().randint(0, len(ind[0]) - 1),
+                       random.SystemRandom().randint(0, len(ind[0]) - 1)]
             pattern.sort()
             shuffle_pattern.insert(0, pattern)
             for j in ind:

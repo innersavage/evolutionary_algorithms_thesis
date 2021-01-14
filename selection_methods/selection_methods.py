@@ -35,7 +35,7 @@ def roulette_selection(population, evaluation_values, amount=10):
     sum_of_all = np.sum(evaluation_values)
     if sum_of_all in [np.float64('inf'), np.float64('-inf')]:
         sum_of_all = np.nextafter(sum_of_all, 0)
-    # Below is the edge case if sum_of_all equals zero
+    # Below the edge case if sum_of_all equals zero
     if sum_of_all == 0:
         sum_of_all = 1
     probability = [i / sum_of_all for i in evaluation_values]
