@@ -60,7 +60,7 @@ def ranking_selection(population, evaluation_values, amount=10, function=None, *
         f = function(i, len(ranking), **kwargs)
         i -= 1
         next_index = np.where(evaluation_values == ranking[i])
-        j = j + 1 if (last_index[0].tolist() == next_index[0].tolist()) else 0
+        j = j + 1 if (last_index[0].tolist() == next_index[0].tolist()) and j < len(next_index) else 0
         last_index = next_index
         index = next_index[0][j]
         for k in range(math.ceil(f)):
