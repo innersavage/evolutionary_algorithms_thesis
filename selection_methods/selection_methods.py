@@ -32,9 +32,8 @@ def roulette_spin(roulette_wheel):
 def roulette_selection(population, evaluation_values, amount=10):
     if not all([True if len(evaluation_values) == len(chromosomes) else False for chromosomes in population]):
         raise Exception
-    # Below the edge case if all evaluation_values equals zero
-    if not np.all(evaluation_values):
-        evaluation_values = np.ones(evaluation_values.shape)
+    # Below the case when evaluation_value equals zero
+    evaluation_values = np.where(evaluation_values != 0, evaluation_values, np.nextafter(0, 1))
     sum_of_all = np.sum(evaluation_values)
     if sum_of_all in [np.float64('inf'), np.float64('-inf')]:
         sum_of_all = np.nextafter(sum_of_all, 0)
